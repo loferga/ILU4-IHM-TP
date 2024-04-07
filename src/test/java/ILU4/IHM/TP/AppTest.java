@@ -3,6 +3,7 @@
  */
 package ILU4.IHM.TP;
 
+import fr.loferga.boundary.App;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

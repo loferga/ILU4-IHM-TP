@@ -2,12 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package ILU4.IHM.TP;
+package fr.loferga.boundary;
 
 /**
  *
  * @author LFM4179A
  */
+
+import com.formdev.flatlaf.FlatDarkLaf;
+
 public class Exercice1 extends javax.swing.JFrame {
 
     /**
@@ -42,16 +45,16 @@ public class Exercice1 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(null), "Test des actions utilisateur"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Test des actions utilisateur"));
 
-        jCheckBox1.setText("Case numéro 1");
+        jCheckBox1.setText("Case numÃ©ro 1");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
             }
         });
 
-        jCheckBox2.setText("Case numéro 2");
+        jCheckBox2.setText("Case numÃ©ro 2");
         jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox2ActionPerformed(evt);
@@ -165,7 +168,7 @@ public class Exercice1 extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(null), "Observation des événements"));
+        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Observation des Ã©vÃ©nements"));
 
         jTextArea2.setEditable(false);
         jTextArea2.setColumns(20);
@@ -205,21 +208,21 @@ public class Exercice1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        String action = jCheckBox1.isSelected() ? "cocher" : "décocher";
-        logLine("Vous venez de " + action + " la Case numéro 1");
+        String action = jCheckBox1.isSelected() ? "cocher" : "dÃ©cocher";
+        logLine("Vous venez de " + action + " la Case numÃ©ro 1");
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-        String action = jCheckBox2.isSelected() ? "cocher" : "décocher";
-        logLine("Vous venez de " + action + " la Case numéro 2");
+        String action = jCheckBox2.isSelected() ? "cocher" : "dÃ©cocher";
+        logLine("Vous venez de " + action + " la Case numÃ©ro 2");
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        logLine("Vous venez d’enfoncer le Bouton 1");
+        logLine("Vous venez d'enfoncer le Bouton 1");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        logLine("Vous venez d’enfoncer le Bouton 2");
+        logLine("Vous venez d'enfoncer le Bouton 2");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -228,11 +231,11 @@ public class Exercice1 extends javax.swing.JFrame {
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
         if (!evt.getValueIsAdjusting()) return;
-        logLine("Vous venez de sélectionner l'item " + jList1.getModel().getElementAt(evt.getLastIndex()) + " dans la liste");
+        logLine("Vous venez de sÃ©lectionner l'item " + jList1.getModel().getElementAt(evt.getLastIndex()) + " dans la liste");
     }//GEN-LAST:event_jList1ValueChanged
 
     private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
-        logLine("Vous venez de déplacer le curseur dans la zone de saisie de texte");
+        logLine("Vous venez de dÃ©placer le curseur dans la zone de saisie de texte");
     }//GEN-LAST:event_jTextField1CaretUpdate
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -257,19 +260,8 @@ public class Exercice1 extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Metal".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Exercice1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Exercice1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Exercice1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            javax.swing.UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
+        } catch (Exception ex) {
             java.util.logging.Logger.getLogger(Exercice1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
