@@ -159,7 +159,7 @@ public class Exercice2 extends javax.swing.JFrame {
 
         jLabel4.setText("Qualité du papier");
 
-        qualiteComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Economique" }));
+        qualiteComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Economique", "Qualite" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -251,7 +251,7 @@ public class Exercice2 extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(88, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ajouterBouton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(modifierBouton)

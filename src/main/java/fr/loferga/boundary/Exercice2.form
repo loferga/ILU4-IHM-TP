@@ -324,8 +324,9 @@
             <Component class="javax.swing.JComboBox" name="qualiteComboBox">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="1">
+                  <StringArray count="2">
                     <StringItem index="0" value="Economique"/>
+                    <StringItem index="1" value="Qualite"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -354,7 +355,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="88" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="ajouterBouton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="modifierBouton" min="-2" max="-2" attributes="0"/>
