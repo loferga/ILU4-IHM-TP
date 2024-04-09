@@ -6,6 +6,7 @@ package fr.loferga.controler;
 
 import fr.loferga.model.exercice2.*;
 import java.io.File;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public class ImpressionControler {
     
-    public interface SimpleImpression {
+    public interface ParametresImpression {
         int getNbCopies();
         String getFormat();
         boolean isRectoVerso();
@@ -23,19 +24,28 @@ public class ImpressionControler {
         String getQualite();
     }
     
-    private Impression toImpression(File file, SimpleImpression sImpr) {
-        return new Impression(file, sImpr.getNbCopies(), Format.valueOf(sImpr.getFormat()), sImpr.isRectoVerso(), Couleur.valueOf(sImpr.getCouleur()), Qualite.valueOf(sImpr.getQualite()));
+    private Impression toImpression(File file, ParametresImpression settings) {
+        return new Impression(file,
+                settings.getNbCopies(), Format.valueOf(settings.getFormat()),
+                settings.isRectoVerso(), Couleur.valueOf(settings.getCouleur()),
+                Qualite.valueOf(settings.getQualite())
+        );
     }
     
     private final List<Impression> impressions = new ArrayList<>();
     
-    public void addImpression(File file, SimpleImpression simpleImpression) {
-        impressions.add(toImpression(file, simpleImpression));
+    public void addImpression(File file, ParametresImpression settings) {
+        impressions.add(toImpression(file, settings));
         System.out.println(impressions);
     }
     
-    public void setImpression(int numeroImpression, File file, SimpleImpression simpleImpression) {
-        impressions.set(numeroImpression, toImpression(file, simpleImpression));
+    public void modifyImpression(int numeroImpression, ParametresImpression settings) {
+        Impression impression = impressions.get(numeroImpression);
+        impression.setNbCopies(settings.getNbCopies());
+        impression.setFormat(Format.valueOf(settings.getFormat()));
+        impression.setRectoVerso(settings.isRectoVerso());
+        impression.setCouleur(Couleur.valueOf(settings.getCouleur()));
+        impression.setQualite(Qualite.valueOf(settings.getQualite()));
         System.out.println(impressions);
     }
     
@@ -44,8 +54,8 @@ public class ImpressionControler {
         System.out.println(impressions);
     }
     
-    public SimpleImpression getImpression(int numeroImpression) {
-        return new SimpleImpression() {
+    public ParametresImpression getImpression(int numeroImpression) {
+        return new ParametresImpression() {
             private Impression getImpr() {
                 return impressions.get(numeroImpression);
             }

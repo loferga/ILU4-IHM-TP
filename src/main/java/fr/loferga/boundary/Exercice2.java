@@ -5,9 +5,12 @@
 package fr.loferga.boundary;
 
 import fr.loferga.controler.ImpressionControler;
-import fr.loferga.controler.ImpressionControler.SimpleImpression;
+import fr.loferga.controler.ImpressionControler.ParametresImpression;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -15,7 +18,7 @@ import javax.swing.JFileChooser;
  */
 public class Exercice2 extends javax.swing.JFrame {
     
-    private ImpressionControler impressionControler;
+    private final ImpressionControler impressionControler;
 
     /**
      * Creates new form Exercice2
@@ -321,7 +324,7 @@ public class Exercice2 extends javax.swing.JFrame {
 
     private File selectedFile = null;
     
-    private static final SimpleImpression defaultImpression = new SimpleImpression() {
+    private static final ParametresImpression PARAMETRES_IMPRESSION_PAR_DEFAUT = new ParametresImpression() {
         @Override public int getNbCopies()      {return 0;}
         @Override public String getFormat()     {return "A3";}
         @Override public boolean isRectoVerso() {return false;}
@@ -329,8 +332,8 @@ public class Exercice2 extends javax.swing.JFrame {
         @Override public String getQualite()    {return "Economique";}
     };
     
-    private SimpleImpression getSimpleImpression() {
-        return new SimpleImpression() {
+    private ParametresImpression getParametresImpression() {
+        return new ParametresImpression() {
             @Override public int getNbCopies()      {return (int) nbCopiesSpinner.getValue();}
             @Override public String getFormat()     {return formatComboBox.getSelectedItem().toString();}
             @Override public boolean isRectoVerso() {return rectoVersoCheckBox.isSelected();}
@@ -339,8 +342,7 @@ public class Exercice2 extends javax.swing.JFrame {
         };
     }
     
-    private void loadImpression(SimpleImpression impression) {
-        nomFichierTextField.setText(listeImpressions.getSelectedValue());
+    private void loadParametresImpression(ParametresImpression impression) {
         nbCopiesSpinner.setValue(impression.getNbCopies());
         formatComboBox.setSelectedItem(impression.getFormat());
         rectoVersoCheckBox.setSelected(impression.isRectoVerso());
@@ -352,13 +354,17 @@ public class Exercice2 extends javax.swing.JFrame {
     
     private void parcourirBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parcourirBoutonActionPerformed
         javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
-        int returnValue = fileChooser.showOpenDialog(null);
+        int returnValue = fileChooser.showOpenDialog(this);
         
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileChooser.getSelectedFile();
             nomFichierTextField.setText(selectedFile.getName());
         }
         ajouterBouton.setEnabled(true);
+        listeImpressions.clearSelection();
+        modifierBouton.setEnabled(false);
+        supprimerBouton.setEnabled(false);
+        loadParametresImpression(PARAMETRES_IMPRESSION_PAR_DEFAUT);
     }//GEN-LAST:event_parcourirBoutonActionPerformed
 
     private void ajouterBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterBoutonActionPerformed
@@ -369,18 +375,20 @@ public class Exercice2 extends javax.swing.JFrame {
             newModel[i] = model.getElementAt(i);
         newModel[model.getSize()] = nomFichierTextField.getText();
         listeImpressions.setListData(newModel);
-        impressionControler.addImpression(selectedFile, getSimpleImpression());
+        impressionControler.addImpression(selectedFile, getParametresImpression());
+        selectedFile = null;
         
         nomFichierTextField.setText("");
         ajouterBouton.setEnabled(false);
+        loadParametresImpression(PARAMETRES_IMPRESSION_PAR_DEFAUT);
     }//GEN-LAST:event_ajouterBoutonActionPerformed
     
     private void listeImpressionsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listeImpressionsValueChanged
         if (!modifierBouton.isEnabled()) modifierBouton.setEnabled(true);
         if (!supprimerBouton.isEnabled()) supprimerBouton.setEnabled(true);
         int selectedIndex = listeImpressions.getSelectedIndex();
-        SimpleImpression impression = selectedIndex == -1 ? defaultImpression : impressionControler.getImpression(selectedIndex);
-        loadImpression(impression);
+        ParametresImpression impression = selectedIndex == -1 ? PARAMETRES_IMPRESSION_PAR_DEFAUT : impressionControler.getImpression(selectedIndex);
+        loadParametresImpression(impression);
     }//GEN-LAST:event_listeImpressionsValueChanged
 
     private void supprimerBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerBoutonActionPerformed
@@ -400,30 +408,28 @@ public class Exercice2 extends javax.swing.JFrame {
     }//GEN-LAST:event_supprimerBoutonActionPerformed
 
     private void modifierBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifierBoutonActionPerformed
-        impressionControler.setImpression(listeImpressions.getSelectedIndex(), selectedFile, getSimpleImpression());
+        impressionControler.modifyImpression(listeImpressions.getSelectedIndex(), getParametresImpression());
     }//GEN-LAST:event_modifierBoutonActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+            /* Set the Nimbus look and feel */
+            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+            * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+            */
         try {
             javax.swing.UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
-        } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(Exercice1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(Exercice2.class.getName()).log(Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Exercice2().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Exercice2().setVisible(true);
         });
     }
 

@@ -31,21 +31,46 @@ public class Impression {
     public int getNbCopies() {
         return nbCopies;
     }
+    
+    public void setNbCopies(int nbCopies) {
+        this.nbCopies = nbCopies;
+    }
 
     public Format getFormat() {
         return format;
+    }
+
+    public void setFormat(Format format) {
+        this.format = format;
     }
 
     public boolean isRectoVerso() {
         return rectoVerso;
     }
 
+    public void setRectoVerso(boolean rectoVerso) {
+        this.rectoVerso = rectoVerso;
+    }
+
     public Couleur getCouleur() {
         return couleur;
     }
 
+    public void setCouleur(Couleur couleur) {
+        this.couleur = couleur;
+    }
+
     public Qualite getQualite() {
         return qualite;
+    }
+
+    public void setQualite(Qualite qualite) {
+        this.qualite = qualite;
+    }
+    
+    @Override
+    public String toString() {
+        return nbCopies + "x " + file.getName() + ": " + format.toString() + ", " + couleur.toString() + ", " + (rectoVerso ? "rectoVerso" : "recto") + ", " + qualite.toString();
     }
     
 }
