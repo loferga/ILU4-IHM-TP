@@ -9,12 +9,17 @@ package fr.loferga.boundary;
  * @author LFM4179A
  */
 public class ChatEtDessin extends javax.swing.JFrame {
-
+    
+    private javax.swing.Timer timer;
+    
     /**
      * Creates new form ChatEtDessin
      */
     public ChatEtDessin() {
+        this.timer = new javax.swing.Timer(1000, this::timerActionPerformed);
         initComponents();
+        this.dessinPartage.setColor(java.awt.Color.BLUE);
+        this.dessinPartage.setSize(10);
     }
 
     /**
@@ -36,7 +41,7 @@ public class ChatEtDessin extends javax.swing.JFrame {
         greenToggle = new javax.swing.JToggleButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         traitFinToggle = new javax.swing.JToggleButton();
-        TraitEpaisToogle = new javax.swing.JToggleButton();
+        TraitEpaisToggle = new javax.swing.JToggleButton();
         dessinPartage = new fr.loferga.boundary.DessinPanel();
         jPanel2 = new javax.swing.JPanel();
         loginTextField = new javax.swing.JTextField();
@@ -50,6 +55,7 @@ public class ChatEtDessin extends javax.swing.JFrame {
         timerLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         messageField = new javax.swing.JTextField();
+        warningLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,9 +70,14 @@ public class ChatEtDessin extends javax.swing.JFrame {
         blueToggle.setOpaque(true);
         blueToggle.setPreferredSize(new java.awt.Dimension(20, 20));
         blueToggle.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        blueToggle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blueToggleActionPerformed(evt);
+            }
+        });
         jToolBar1.add(blueToggle);
 
-        redToggle.setBackground(new java.awt.Color(0, 0, 0));
+        redToggle.setBackground(new java.awt.Color(255, 0, 0));
         colorButtonGroup.add(redToggle);
         redToggle.setForeground(new java.awt.Color(255, 255, 255));
         redToggle.setEnabled(false);
@@ -75,6 +86,11 @@ public class ChatEtDessin extends javax.swing.JFrame {
         redToggle.setOpaque(true);
         redToggle.setPreferredSize(new java.awt.Dimension(20, 20));
         redToggle.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        redToggle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                redToggleActionPerformed(evt);
+            }
+        });
         jToolBar1.add(redToggle);
 
         greenToggle.setBackground(new java.awt.Color(0, 255, 0));
@@ -85,6 +101,11 @@ public class ChatEtDessin extends javax.swing.JFrame {
         greenToggle.setOpaque(true);
         greenToggle.setPreferredSize(new java.awt.Dimension(20, 20));
         greenToggle.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        greenToggle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                greenToggleActionPerformed(evt);
+            }
+        });
         jToolBar1.add(greenToggle);
         jToolBar1.add(jSeparator1);
 
@@ -95,17 +116,27 @@ public class ChatEtDessin extends javax.swing.JFrame {
         traitFinToggle.setFocusable(false);
         traitFinToggle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         traitFinToggle.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        traitFinToggle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                traitFinToggleActionPerformed(evt);
+            }
+        });
         jToolBar1.add(traitFinToggle);
 
-        widthButtonGroup.add(TraitEpaisToogle);
-        TraitEpaisToogle.setText("Trait �pais");
-        TraitEpaisToogle.setEnabled(false);
-        TraitEpaisToogle.setFocusable(false);
-        TraitEpaisToogle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        TraitEpaisToogle.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(TraitEpaisToogle);
+        widthButtonGroup.add(TraitEpaisToggle);
+        TraitEpaisToggle.setText("Trait épais");
+        TraitEpaisToggle.setEnabled(false);
+        TraitEpaisToggle.setFocusable(false);
+        TraitEpaisToggle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        TraitEpaisToggle.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        TraitEpaisToggle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TraitEpaisToggleActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(TraitEpaisToggle);
 
-        dessinPartage.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dessin partag�"));
+        dessinPartage.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Dessin partagé"));
         dessinPartage.setEnabled(false);
 
         javax.swing.GroupLayout dessinPartageLayout = new javax.swing.GroupLayout(dessinPartage);
@@ -116,7 +147,7 @@ public class ChatEtDessin extends javax.swing.JFrame {
         );
         dessinPartageLayout.setVerticalGroup(
             dessinPartageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 492, Short.MAX_VALUE)
+            .addGap(0, 456, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -145,12 +176,11 @@ public class ChatEtDessin extends javax.swing.JFrame {
 
         jLabel2.setText("Pasword:");
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chat"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Chat"));
 
         chatArea.setEditable(false);
         chatArea.setColumns(20);
         chatArea.setRows(5);
-        chatArea.setFocusable(false);
         jScrollPane1.setViewportView(chatArea);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -178,16 +208,19 @@ public class ChatEtDessin extends javax.swing.JFrame {
 
         jLabel3.setText("Votre message:");
 
-        messageField.setEditable(false);
+        messageField.setEnabled(false);
+        messageField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                messageFieldActionPerformed(evt);
+            }
+        });
+
+        warningLabel.setForeground(new java.awt.Color(204, 0, 0));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(seConnecterButton)
-                .addGap(34, 34, 34))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -214,6 +247,15 @@ public class ChatEtDessin extends javax.swing.JFrame {
                                 .addComponent(timerLabel)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(warningLabel)
+                        .addGap(106, 106, 106))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(seConnecterButton)
+                        .addGap(34, 34, 34))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,7 +272,9 @@ public class ChatEtDessin extends javax.swing.JFrame {
                 .addComponent(timerLabel)
                 .addGap(21, 21, 21)
                 .addComponent(seConnecterButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(warningLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(messageField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -255,22 +299,76 @@ public class ChatEtDessin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private int countSeconds = 0;
+    
+    private void timerActionPerformed(java.awt.event.ActionEvent evt) {
+        countSeconds++;
+        timerLabel.setText("Connecté depuis " + countSeconds + " secondes.");
+    }
+    
+    private boolean connected = false;
+    
     private void seConnecterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seConnecterButtonActionPerformed
-        seConnecterButton.setEnabled(false);
-        seConnecterButton.setFocusable(false);
+        if (connected) {
+            timerLabel.setText("");
+            countSeconds = 0;
+            loginTextField.setEnabled(true);
+            passwordField.setEnabled(true);
+            seConnecterButton.setText("Se Connecter");
+            messageField.setEnabled(false);
+            dessinPartage.setEnabled(false);
+            blueToggle.setEnabled(false);
+            redToggle.setEnabled(false);
+            greenToggle.setEnabled(false);
+            traitFinToggle.setEnabled(false);
+            TraitEpaisToggle.setEnabled(false);
+            timer.stop();
+            connected = false;
+            return;
+        }
+        if (loginTextField.getText().equals(""))
+            { warningLabel.setText("login incorrect"); return; }
+        if (passwordField.getPassword().length == 0)
+            { warningLabel.setText("mot de passe incorrect"); return; }
+        warningLabel.setText("");
         loginTextField.setEnabled(false);
-        loginTextField.setFocusable(false);
         passwordField.setEnabled(false);
-        passwordField.setFocusable(false);
+        seConnecterButton.setText("Se Déconnecter");
         messageField.setEnabled(true);
-        messageField.setFocusable(true);
-        chatArea.setEnabled(true);
-        chatArea.setFocusable(true);
         dessinPartage.setEnabled(true);
         blueToggle.setEnabled(true);
         redToggle.setEnabled(true);
         greenToggle.setEnabled(true);
+        traitFinToggle.setEnabled(true);
+        TraitEpaisToggle.setEnabled(true);
+        timer.start();
+        connected = true;
     }//GEN-LAST:event_seConnecterButtonActionPerformed
+
+    private void messageFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageFieldActionPerformed
+        chatArea.append(loginTextField.getText() + " : " + messageField.getText() + '\n');
+        messageField.setText("");
+    }//GEN-LAST:event_messageFieldActionPerformed
+
+    private void blueToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blueToggleActionPerformed
+        dessinPartage.setColor(java.awt.Color.BLUE);
+    }//GEN-LAST:event_blueToggleActionPerformed
+
+    private void redToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redToggleActionPerformed
+        dessinPartage.setColor(java.awt.Color.RED);
+    }//GEN-LAST:event_redToggleActionPerformed
+
+    private void greenToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_greenToggleActionPerformed
+        dessinPartage.setColor(java.awt.Color.GREEN);
+    }//GEN-LAST:event_greenToggleActionPerformed
+
+    private void traitFinToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_traitFinToggleActionPerformed
+        dessinPartage.setSize(10);
+    }//GEN-LAST:event_traitFinToggleActionPerformed
+
+    private void TraitEpaisToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TraitEpaisToggleActionPerformed
+        dessinPartage.setSize(15);
+    }//GEN-LAST:event_TraitEpaisToggleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -300,15 +398,13 @@ public class ChatEtDessin extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ChatEtDessin().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ChatEtDessin().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton TraitEpaisToogle;
+    private javax.swing.JToggleButton TraitEpaisToggle;
     private javax.swing.JToggleButton blueToggle;
     private javax.swing.JTextArea chatArea;
     private javax.swing.ButtonGroup colorButtonGroup;
@@ -331,6 +427,7 @@ public class ChatEtDessin extends javax.swing.JFrame {
     private javax.swing.JButton seConnecterButton;
     private javax.swing.JLabel timerLabel;
     private javax.swing.JToggleButton traitFinToggle;
+    private javax.swing.JLabel warningLabel;
     private javax.swing.ButtonGroup widthButtonGroup;
     // End of variables declaration//GEN-END:variables
 }

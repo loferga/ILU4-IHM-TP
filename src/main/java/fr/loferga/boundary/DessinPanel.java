@@ -4,12 +4,26 @@
  */
 package fr.loferga.boundary;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author LFM4179A
  */
 public class DessinPanel extends javax.swing.JPanel {
-
+    
+    private static record Dot(Point location, int size, Color color) {};
+    
+    private Color currentColor;
+    
+    private int currentSize;
+    
+    private List<Dot> dots = new ArrayList<>();
+    
     /**
      * Creates new form DessinPanel
      */
@@ -26,6 +40,17 @@ public class DessinPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                formMouseDragged(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -38,6 +63,35 @@ public class DessinPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void setColor(Color color) {
+        this.currentColor = color;
+    }
+    
+    public void setSize(int size) {
+        this.currentSize = size;
+    }
+    
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        if (!this.isEnabled()) return;
+        dots.add(new Dot(evt.getPoint(), currentSize, currentColor));
+        repaint();
+    }//GEN-LAST:event_formMousePressed
+
+    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
+        if (!this.isEnabled()) return;
+        dots.add(new Dot(evt.getPoint(), currentSize, currentColor));
+        repaint();
+    }//GEN-LAST:event_formMouseDragged
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for (Dot dot : dots) {
+            g.setColor(dot.color);
+            int halfSize = dot.size/2;
+            g.fillOval(dot.location.x - halfSize, dot.location.y - halfSize, dot.size, dot.size);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
