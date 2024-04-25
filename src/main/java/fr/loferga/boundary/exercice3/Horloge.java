@@ -16,7 +16,8 @@ public class Horloge extends javax.swing.JFrame {
     public Horloge() {
         initComponents();
         TimeModel timeModel = new TimeModel();
-        timeModel.addTimeModelListener(jClock3);
+        timeModel.addTimeModelListener(jClock);
+        timeModel.addTimeModelListener(timeLabel);
     }
 
     /**
@@ -28,33 +29,20 @@ public class Horloge extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jClock3 = new fr.loferga.boundary.exercice3.JClock();
-        jClock1 = new fr.loferga.boundary.exercice3.JClock();
-
-        javax.swing.GroupLayout jClock3Layout = new javax.swing.GroupLayout(jClock3);
-        jClock3.setLayout(jClock3Layout);
-        jClock3Layout.setHorizontalGroup(
-            jClock3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
-        );
-        jClock3Layout.setVerticalGroup(
-            jClock3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
-        );
+        jClock = new fr.loferga.boundary.exercice3.JClock();
+        timeLabel = new fr.loferga.boundary.exercice3.TimeLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(500, 520));
-        setPreferredSize(new java.awt.Dimension(500, 520));
-        setResizable(false);
+        setMinimumSize(null);
 
-        javax.swing.GroupLayout jClock1Layout = new javax.swing.GroupLayout(jClock1);
-        jClock1.setLayout(jClock1Layout);
-        jClock1Layout.setHorizontalGroup(
-            jClock1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+        javax.swing.GroupLayout jClockLayout = new javax.swing.GroupLayout(jClock);
+        jClock.setLayout(jClockLayout);
+        jClockLayout.setHorizontalGroup(
+            jClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        jClock1Layout.setVerticalGroup(
-            jClock1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jClockLayout.setVerticalGroup(
+            jClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 500, Short.MAX_VALUE)
         );
 
@@ -62,11 +50,19 @@ public class Horloge extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jClock1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jClock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(217, 217, 217)
+                .addComponent(timeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(218, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jClock1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jClock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(timeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -108,7 +104,7 @@ public class Horloge extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private fr.loferga.boundary.exercice3.JClock jClock1;
-    private fr.loferga.boundary.exercice3.JClock jClock3;
+    private fr.loferga.boundary.exercice3.JClock jClock;
+    private fr.loferga.boundary.exercice3.TimeLabel timeLabel;
     // End of variables declaration//GEN-END:variables
 }

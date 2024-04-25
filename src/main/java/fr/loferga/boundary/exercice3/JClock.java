@@ -50,19 +50,19 @@ public class JClock extends javax.swing.JPanel implements TimeModelListener {
         );
     }// </editor-fold>//GEN-END:initComponents
     
-    //retourne le degré de rotation d'une seconde sur l'horloge
+    //retourne le degrÃ© de rotation d'une seconde sur l'horloge
     private int getSecondsRotation(int seconds) {
         return(360/60)*seconds;
     }
-    //retourne le degré de rotation d'une minute sur l'horloge
+    //retourne le degrÃ© de rotation d'une minute sur l'horloge
     private int getMinuteRotation(int minutes) {
         return(360/60)*minutes;
     }
-    //retourne le degré de rotation d'une heure sur l'horloge
+    //retourne le degrÃ© de rotation d'une heure sur l'horloge
     private int getHourRotation(int hours) {
         return(360/12)*hours;
     }
-    // retourne un point qui a été tourné autour du centre selon le degré
+    // retourne un point qui a Ã©tÃ© tournÃ© autour du centre selon le degrÃ©
     private Point rotatePoint(Point point, Point center, int degree) {
         AffineTransform rotation = new AffineTransform();
         double angleInRadians = (degree*Math.PI/180);
@@ -72,62 +72,76 @@ public class JClock extends javax.swing.JPanel implements TimeModelListener {
         return result;
     }
     
+    private final Supplier<Integer> CLOCK_SIZE = () -> Math.min(super.getWidth(), super.getHeight());
+    private final Supplier<Point> TWELVE_O_CLOCK = () -> new Point(CLOCK_SIZE.get()/2, super.getHeight()/20);
+    private final Supplier<Point> CENTER = () -> new Point(CLOCK_SIZE.get()/2, CLOCK_SIZE.get()/2);
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Point center = CENTER.get();
         Graphics2D g2d = (Graphics2D) g;
         // draw Clock
         drawBackground(g);
-        drawTicks(g);
-        drawHour(g2d);
+        drawTicks(g, center);
+        drawSecond(g2d, center);
+        drawMinute(g2d, center);
+        drawHour(g2d, center);
+        drawDot(g, center);
     }
-    
-    private final Supplier<Point> TWELVE_O_CLOCK = () -> new Point(20, super.getWidth()/2);
-    private final Supplier<Point> CENTER = () -> new Point(super.getHeight()/2, super.getWidth()/2);
     
     private void drawBackground(Graphics g) {
         g.setColor(Color.LIGHT_GRAY);
-        g.fillOval(0, 0, super.getWidth(), super.getWidth());
+        int clockSize = CLOCK_SIZE.get();
+        g.fillOval(0, 0, clockSize, clockSize);
     }
     
-    private void drawTicks(Graphics g) {
+    private void drawTicks(Graphics g, Point center) {
         g.setColor(Color.BLACK);
         int hourInterval = 360/12;
-        Point center = CENTER.get();
+        int ticksSize = CLOCK_SIZE.get()/50;
         Point currentPoint = TWELVE_O_CLOCK.get();
         for (int i=0; i<12; i++) {
-            g.fillOval(currentPoint.x-4, currentPoint.y-4, 8, 8);
+            g.fillOval(currentPoint.x-ticksSize/2, currentPoint.y-ticksSize/2, ticksSize, ticksSize);
             currentPoint = rotatePoint(currentPoint, center, hourInterval);
         }
     }
     
-    private void drawHour(Graphics2D g) {
-        g.setColor(Color.BLACK);
-        Point center = CENTER.get();
-        Point hour = rotatePoint(TWELVE_O_CLOCK.get(), center, getHourRotation(time.getHour()));
-        g.setStroke(new BasicStroke(4));
-        g.drawLine(center.x, center.y, hour.x, hour.y);
-    }
-    
-    private void drawMinute(Graphics2D g) {
-        g.setColor(Color.BLACK);
-        Point center = CENTER.get();
-        Point refference = TWELVE_O_CLOCK.get();
-        // refference.x -= 50;
-        Point minute = rotatePoint(refference, center, getMinuteRotation(time.getMinute()));
-        g.setStroke(new BasicStroke(6));
+    private void drawSecond(Graphics2D g, Point center) {
+        g.setColor(Color.RED);
+        Point referencePoint = TWELVE_O_CLOCK.get();
+        Point minute = rotatePoint(referencePoint, center, getSecondsRotation(time.getSecond()));
+        g.setStroke(new BasicStroke(CLOCK_SIZE.get()/80));
         g.drawLine(center.x, center.y, minute.x, minute.y);
     }
     
-    private void drawSecond(Graphics2D g) {
-        
+    private void drawMinute(Graphics2D g, Point center) {
+        g.setColor(Color.BLACK);
+        int clockSize = CLOCK_SIZE.get();
+        Point referencePoint = new Point(center.x, TWELVE_O_CLOCK.get().y + (clockSize/6));
+        Point minute = rotatePoint(referencePoint, center, getMinuteRotation(time.getMinute()));
+        g.setStroke(new BasicStroke(clockSize/40));
+        g.drawLine(center.x, center.y, minute.x, minute.y);
+    }
+    
+    private void drawHour(Graphics2D g, Point center) {
+        g.setColor(Color.BLACK);
+        Point referencePoint = TWELVE_O_CLOCK.get();
+        Point hour = rotatePoint(referencePoint, center, getHourRotation(time.getHour()));
+        g.setStroke(new BasicStroke(CLOCK_SIZE.get()/60));
+        g.drawLine(center.x, center.y, hour.x, hour.y);
+    }
+    
+    private void drawDot(Graphics g, Point center) {
+        g.setColor(Color.ORANGE);
+        int dotSize = CLOCK_SIZE.get()/15;
+        g.fillOval(center.x - dotSize/2, center.y - dotSize/2, dotSize, dotSize);
     }
     
     @Override
     public void timeChanged(TimeModelEvent evt) {
         time = evt.getTime();
-        repaint();
-        System.out.println("TEST!!!");
+        super.repaint();
     }
 
 
